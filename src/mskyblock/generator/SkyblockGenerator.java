@@ -41,17 +41,51 @@ public class SkyblockGenerator extends Generator {
 	public void generateChunk(int chunkX, int chunkZ) {
 		BaseFullChunk chunk = level.getChunk(chunkX, chunkZ);
 		if (chunkX % 20 == 0 && chunkZ % 20 == 0) {
-			for (int x = 0; x < 16; x++) {
-				for (int z = 0; z < 16; z++) {
-					chunk.setBlock(x, 0, z, Block.BEDROCK);
-					for (int y = 1; y <= 3; y++) {
-						chunk.setBlock(x, y, z, Block.STONE);
+/** Main island
+ * 0,0 - 0,6
+ * 3,4 - 6,6
+*/
+			for (int x = 0; x < 3; x++) {
+				for (int z = 0; z < 6; z++) {
+					for (int y = 0; y <= 3; y++) {
+						chunk.setBlock(x, y, z, Block.DIRT);
 					}
-					chunk.setBlock(x, 4, z, Block.DIRT);
-					chunk.setBlock(x, 5, z, Block.GRASS);
+					chunk.setBlock(x, 4, z, Block.GRASS);
 				}
 			}
-			ObjectTree.growTree(level, chunkX*16 + 8, 6, chunkZ*16 + 8, random, BlockSapling.OAK);
+                        for (int x = 3; x < 6; x++) {
+                                for (int z = 3; z < 6; z++) {
+                                        for (int y = 0; y <= 3; y++) {
+                                                chunk.setBlock(x, y, z, Block.D$
+                                        }
+                                        chunk.setBlock(x, 4, z, Block.GRASS);
+                                }
+                        }
+			ObjectTree.growTree(level, chunkX*16 + 4, 5, chunkZ*16 + 4, random, BlockSapling.OAK);
+/** Dirt helper island
+ * 14,0 - 16,3
+*/
+                        for (int x = 14; x < 16; x++) {
+                                for (int z = 0; z < 3; z++) {
+                                        for (int y = 0; y <= 4; y++) {
+                                                chunk.setBlock(x, y, z, Block.DIRT);
+                                        }
+                                }
+                        }
+                        chunk.setBlock(15, 4, 15, Block.WATER);
+
+/** Sand helper Island
+ * 14,14 - 16,16
+*/
+                        for (int x = 14; x < 16; x++) {
+                                for (int z = 14; z < 16; z++) {
+                                        chunk.setBlock(x, 0, z, Block.STONE);
+                                        for (int y = 1; y <= 4; y++) {
+                                                chunk.setBlock(x, y, z, Block.SAND);
+                                        }
+                                }
+                        }
+
 			if (DataBase.getInstance().config.getBoolean("create-sponge", false)) {
 				chunk.setBlock(3, 6, 3, Block.SPONGE);
 				chunk.setBlock(3, 7, 3, Block.STONE);
